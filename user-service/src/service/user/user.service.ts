@@ -9,8 +9,8 @@ export class UserService {
     @InjectModel(User) private readonly userModel: typeof User
   ) {}
 
-  async create(user: CreateUserDto): Promise<User> {
-    return this.userModel.create(user);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    return this.userModel.create(createUserDto as any);
   }
 
   async findAll(): Promise<User[]> {
@@ -21,8 +21,8 @@ export class UserService {
     return this.userModel.findByPk(id);
   }
 
-  async update(id: number, updateUser: UpdateUserDto): Promise<[number, User[]]> {
-    return this.userModel.update(updateUser, { where: { id } });
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<[number, User[]]> {
+    return this.userModel.update(updateUserDto, { where: { id }, returning: true });
   }
 
   async remove(id: number): Promise<number> {

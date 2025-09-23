@@ -1,9 +1,8 @@
+// user-service/src/app.module.ts
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './service/user/user.module';
-import { AuthModule } from './service/auth/auth.module';
+import { User } from './service/user/user.model';
 
 @Module({
   imports: [
@@ -11,16 +10,14 @@ import { AuthModule } from './service/auth/auth.module';
       dialect: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres', // Change as needed
-      password: 'postgres', // Change as needed
-      database: 'microservice_db', // Change as needed
+      username: 'postgres',         // 👈 Your PostgreSQL username
+      password: 'your_password',    // 👈 Your PostgreSQL password
+      database: 'microservice_db',  // 👈 Your database name
+      models: [User],
       autoLoadModels: true,
-      synchronize: true,
+      synchronize: true, // Only for development
     }),
     UserModule,
-    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
