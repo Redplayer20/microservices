@@ -9,6 +9,6 @@ async function bootstrap() {
     options: { host: 'localhost', port: 3001 },
   });
   await app.listen();
-  console.log('👤 User Microservice is listening on port 3001');
+  console.log('👤 User Microservice is running on port 3001');
 }
 bootstrap();

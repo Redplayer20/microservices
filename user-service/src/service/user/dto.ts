@@ -1,5 +1,5 @@
+// user-service/src/service/user/dto.ts
 export class CreateUserDto {
-  readonly id: number;
   readonly name: string;
   readonly email: string;
 }

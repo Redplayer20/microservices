@@ -10,12 +10,12 @@ import { User } from './service/user/user.model';
       dialect: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',         // 👈 Your PostgreSQL username
-      password: 'your_password',    // 👈 Your PostgreSQL password
-      database: 'microservice_db',  // 👈 Your database name
+      username: 'postgres',        // your PostgreSQL username
+      password: 'admin',   // your PostgreSQL password
+      database: 'microservice_db', // your database name
       models: [User],
       autoLoadModels: true,
-      synchronize: true, // Only for development
+      synchronize: true, // Only for dev
     }),
     UserModule,
   ],

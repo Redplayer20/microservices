@@ -1,38 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dto';
+// api-gateway/src/api/user/user.service.ts
+
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
-export class UserService {
-  private users: CreateUserDto[] = [];
+export class UserService { // This is a "Client Service" or "Gateway Service"
+  constructor(
+    @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy,
+  ) {}
 
-  create(user: CreateUserDto): CreateUserDto {
-    this.users.push(user);
-    return user;
+  createUser(createUserDto: any) {
+    return firstValueFrom(this.userServiceClient.send({ role: 'users', cmd: 'create' }, createUserDto));
   }
 
-  findAll(): CreateUserDto[] {
-    return this.users;
+  findAllUsers() {
+    return firstValueFrom(this.userServiceClient.send({ role: 'users', cmd: 'find_all' }, {}));
   }
 
-  findOne(id: number): CreateUserDto | undefined {
-    return this.users.find(u => u.id === id);
+  findUserById(id: number) {
+    return firstValueFrom(this.userServiceClient.send({ role: 'users', cmd: 'find_one' }, id));
   }
 
-  update(id: number, updateUser: UpdateUserDto): CreateUserDto | null {
-    const userIndex = this.users.findIndex(u => u.id === id);
-    if (userIndex > -1) {
-      this.users[userIndex] = { ...this.users[userIndex], ...updateUser };
-      return this.users[userIndex];
-    }
-    return null;
+  updateUser(id: number, updateUserDto: any) {
+    return firstValueFrom(this.userServiceClient.send({ role: 'users', cmd: 'update' }, { id, ...updateUserDto }));
   }
 
-  delete(id: number): CreateUserDto | null {
-    const userIndex = this.users.findIndex(u => u.id === id);
-    if (userIndex > -1) {
-      const removed = this.users.splice(userIndex, 1);
-      return removed[0];
-    }
-    return null;
+  deleteUser(id: number) {
+    return firstValueFrom(this.userServiceClient.send({ role: 'users', cmd: 'remove' }, id));
   }
 }

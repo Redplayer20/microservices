@@ -1,5 +1,4 @@
 // user-service/src/service/user/user.model.ts
-
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table
@@ -9,7 +8,7 @@ export class User extends Model<User> {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: number; // 👈 Add the 'declare' keyword here
+  declare id: number;
 
   @Column({
     type: DataType.STRING,
