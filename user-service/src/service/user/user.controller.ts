@@ -70,4 +70,9 @@ export class UserController {
   remove(@Payload() id: number) {
     return this.userService.remove(id);
   }
+
+  @MessagePattern({ role: 'users', cmd: 'find_one_by_email' })
+  findOneByEmail(@Payload() email: string) {
+    return this.userService.findOneByEmail(email);
+  }
 }

@@ -29,4 +29,8 @@ export class UserService {
    remove(id: number): Promise<number> {
     return this.userModel.destroy({ where: { id } });
   }
+
+  findOneByEmail(email: string): Promise<User | null> {
+    return this.userModel.findOne({ where: { email } });
+  }
 }

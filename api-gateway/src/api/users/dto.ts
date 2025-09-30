@@ -1,3 +1,5 @@
+// dto.ts
+
 export class CreateUserDto {
   readonly id: number;
   readonly age: number;
