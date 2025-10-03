@@ -5,6 +5,7 @@ import { UserModule } from './service/user/user.module';
 import { User } from './service/user/user.model';
 import { AuthModule } from './service/auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -19,7 +20,13 @@ import { MailModule } from './mail/mail.module';
       autoLoadModels: true,
       synchronize: true, // Only for dev
     }),
-    UserModule,AuthModule, MailModule
+    BullModule.forRoot({
+      redis: {
+        host: Config.redis.host,
+        port: Config.redis.port as any,
+      },
+    }),
+    UserModule,AuthModule, MailModule,BullModule
   ],
 })
 export class AppModule {}
