@@ -44,12 +44,11 @@ export class UsersService {
     });
     return result;
   }
-  async deleteUser(data): Promise<ResponseDto> {  
-    const result: ResponseDto = await firstValueFrom(
-      this.userMicroservice.send({ role: 'users', cmd: 'delete' }, data),
-    ).catch((err) => {
-      console.log(err);
-    });
-    return result;
-  }
+  async deleteUser(id: number | string): Promise<ResponseDto> {  
+  const numericId = Number(id);  // convert string to number
+  const result: ResponseDto = await firstValueFrom(
+    this.userMicroservice.send({ role: 'users', cmd: 'remove' }, numericId),
+  ).catch((err) => console.log(err));
+  return result;
+}
 }
