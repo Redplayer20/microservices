@@ -22,21 +22,19 @@ export class UsersService {
 
   async findAllUsers(data): Promise<ResponseDto> {
     const result: ResponseDto = await firstValueFrom(
-      this.userMicroservice.send({ role: 'users', cmd: 'All' }, data),
+      this.userMicroservice.send({ role: 'users', cmd: 'find_all' }, {}),
     ).catch((err) => {
       console.log(err);
     });
     return result;
   }
 
-  async findOneUser(data): Promise<ResponseDto> {
-    const result: ResponseDto = await firstValueFrom(
-      this.userMicroservice.send({ role: 'users', cmd: 'One' }, data),  
-    ).catch((err) => {
-      console.log(err);
-    });
-    return result;
-  }
+  async findOneUser(id: number): Promise<ResponseDto> {
+  return await firstValueFrom(
+    this.userMicroservice.send({ role: 'users', cmd: 'find_one' }, id),
+  );
+}
+
 
   async updateUserInfo(data): Promise<ResponseDto> {
     const result: ResponseDto = await firstValueFrom(

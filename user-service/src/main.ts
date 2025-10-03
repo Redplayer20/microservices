@@ -6,9 +6,14 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.TCP,
-    options: { host: 'localhost', port: 3001 },
+    options: {
+      host: '127.0.0.1',  // ✅ must match API Gateway
+      port: 3001,
+    },
   });
+
   await app.listen();
-  console.log('👤 User Microservice is running on port 3001');
+  console.log('🚀 User Microservice is running on TCP: 127.0.0.1:3001');
 }
+
 bootstrap();
